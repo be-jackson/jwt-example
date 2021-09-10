@@ -7,7 +7,7 @@ import javax.persistence.*
 data class GroupPermission(
     @Id
     @Column(name = "id")
-    var id: Long? = null,
+    var id: Long?,
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "group_id")

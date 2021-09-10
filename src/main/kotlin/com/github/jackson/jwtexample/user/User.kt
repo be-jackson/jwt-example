@@ -8,7 +8,7 @@ import javax.persistence.*
 data class User(
     @Id
     @Column(name = "id")
-    var id: Long? = null,
+    var id: Long?,
 
     @Column(name = "username")
     var username: String,

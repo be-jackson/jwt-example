@@ -10,7 +10,7 @@ import javax.persistence.Table
 data class Permission(
     @Id
     @Column(name = "id")
-    var id: Long? = null,
+    var id: Long?,
 
     @Column(name = "name")
     var name: String

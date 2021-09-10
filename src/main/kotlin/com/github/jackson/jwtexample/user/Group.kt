@@ -7,7 +7,7 @@ import javax.persistence.*
 data class Group(
     @Id
     @Column(name = "id")
-    var id: Long? = null,
+    var id: Long?,
 
     @Column(name = "name")
     var name: String,
