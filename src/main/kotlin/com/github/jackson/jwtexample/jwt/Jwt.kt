@@ -15,21 +15,17 @@ class Jwt(
 
     private val key = Keys.hmacShaKeyFor(secretKey.toByteArray())
 
-    fun sign(claims: Claims): String {
-        val builder = Jwts.builder()
-        builder.setIssuer(issuer)
-        builder.setClaims(claims)
+    fun sign(claims: Claims): String = Jwts.builder().apply {
+        setIssuer(issuer)
+        setClaims(claims)
         if (expirySeconds > 0) {
             val now = Date()
-            builder.setExpiration(
-                now.apply {
-                    time = now.time + expirySeconds * 1000
-                }
+            setExpiration(
+                now.apply { time = now.time + expirySeconds * 1000 }
             )
         }
-        builder.signWith(key, SignatureAlgorithm.HS512)
-        return builder.compact()
-    }
+        signWith(key, SignatureAlgorithm.HS512)
+    }.compact()
 
     fun verify(token: String): Jws<Claims> = Jwts.parserBuilder()
         .setSigningKey(key)
