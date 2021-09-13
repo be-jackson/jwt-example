@@ -1,7 +1,8 @@
 package com.github.jackson.jwtexample.user
 
+import com.github.jackson.jwtexample.jwt.JwtAuthentication
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController
 class UserApis(
     val userService: UserService
 ) {
-    @GetMapping("/{username}")
-    fun me(@PathVariable username: String): UserDto {
-        val user: User = userService.findByUsername(username)
-            ?: throw IllegalArgumentException("Could not found user for $username")
+    @GetMapping("/me")
+    fun me(@AuthenticationPrincipal authentication: JwtAuthentication): UserDto {
+        val user: User = userService.findByUsername(authentication.username)
+            ?: throw IllegalArgumentException("Could not found user for ${authentication.username}")
         return UserDto(user.username, user.group.name)
     }
 }
